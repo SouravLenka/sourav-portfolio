@@ -1,0 +1,25 @@
+.achievements-section {
+    width: 100%;
+    position: relative;
+    background-color: transparent;
+}
+
+.achievements-header {
+    margin-bottom: 2rem;
+    max-width: var(--container-max);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.achievements-gallery-container {
+    width: 100%;
+    position: relative;
+    /* Add a subtle center glow to highlight the front card */
+    background: radial-gradient(circle at center, rgba(99, 102, 241, 0.08) 0%, transparent 70%);
+}
+
+@media (max-width: 768px) {
+    .achievements-gallery-container {
+        height: 500px;
+    }
+}

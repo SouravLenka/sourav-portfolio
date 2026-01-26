@@ -1,0 +1,27 @@
+.intro-content {
+    position: relative;
+}
+
+.glass-card {
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.intro-content p .text-accent {
+    position: relative;
+    display: inline-block;
+}
+
+/* Optional: subtle gradient border for the focus area card */
+.glass-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.1), transparent, rgba(99, 102, 241, 0.2));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+}

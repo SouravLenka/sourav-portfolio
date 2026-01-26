@@ -1,0 +1,60 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #020617;
+  padding: 2rem;
+  border-radius: 20px;
+  max-width: 600px;
+  width: 90%;
+  color: white;
+  position: relative;
+}
+
+.modal-content img {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.tech-stack {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin: 1rem 0;
+}
+
+.tech-stack span {
+  background: #1e293b;
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+}
+
+.github-btn {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  background: #2563eb;
+  border-radius: 999px;
+  color: white;
+  text-decoration: none;
+}

@@ -1,0 +1,24 @@
+:root {
+  --bg-main: #0b0f14;
+  --bg-card: #111827;
+
+  --text-primary: #e5e7eb;
+  --text-muted: #9ca3af;
+
+  /* Skill Accent Colors */
+  --github: #ffffff;
+  --aws: #ff9900;
+  --linux: #f5c542;
+  --python: #3776ab;
+
+  --accent: #38bdf8;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}

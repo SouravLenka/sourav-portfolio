@@ -1,0 +1,25 @@
+.project-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-8px);
+}
+
+.project-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.project-card-content {
+  padding: 1rem;
+}
+
+.project-card h3 {
+  margin-bottom: 0.5rem;
+}
