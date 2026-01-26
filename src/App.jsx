@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import Prism from './components/background/Prism';
 import DotGrid from './components/background/DotGrid';
 import Dock from './components/ui/Dock';
-import Hero from './components/layout/Hero';
+import Hero from './components/layout/MainHero';
 import Introduction from './components/layout/Introduction';
 import Projects from './components/layout/Projects';
 import Achievements from './components/layout/Achievements';
