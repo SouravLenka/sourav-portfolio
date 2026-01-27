@@ -14,9 +14,9 @@ export default function Hero() {
           className="space-y-4 flex flex-col items-center"
         >
           <h1 className="text-6xl md:text-8xl font-black tracking-tight text-white mb-4">
-            Hi, I’m <span className="bg-clip-text text-transparent bg-linear-to-r from-blue-400 via-purple-500 to-indigo-500 animate-pulse">Sourav Lenka</span>
+            Hi, I’m <br />
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-accent via-white to-accent animate-gradient-slow">Sourav Lenka</span>
           </h1>
-
           <div className="flex justify-center items-center h-12">
             <RotatingText
               texts={['Python', 'Linux', 'AWS', 'Automation', 'AI Systems']}

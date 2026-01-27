@@ -19,7 +19,8 @@ const Introduction = () => {
                 <div className="intro-content grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
                     <div className="lg:col-span-8 space-y-6">
                         <p className="text-xl md:text-2xl text-white leading-relaxed font-medium">
-                            Hi, I’m <span className="text-accent">Sourav Lenka</span>, a Python and DevOps-oriented Computer Science undergraduate with a strong interest in building reliable, cloud-ready, and automation-driven systems.
+                            Hi, I’m <br />
+                            <span className="bg-clip-text text-transparent bg-gradient-to-r from-accent via-white to-accent animate-gradient-slow font-bold">Sourav Lenka</span>, a Python and DevOps-oriented Computer Science undergraduate with a strong interest in building reliable, cloud-ready, and automation-driven systems.
                         </p>
 
                         <p className="text-lg text-text-muted leading-relaxed">
