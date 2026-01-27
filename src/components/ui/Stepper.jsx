@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../../lib/utils';
 import { Check, ChevronRight, ChevronLeft, Send } from 'lucide-react';
 
-export default function Stepper({ onFinish }) {
+export default function Stepper({ onFinish, status }) {
     const [step, setStep] = useState(0);
     const [formData, setFormData] = useState({
         name: '',
@@ -100,6 +100,8 @@ export default function Stepper({ onFinish }) {
     };
 
     const handleNext = () => {
+        if (status === 'submitting') return;
+
         if (step > 0 && step < steps.length - 1) {
             if (!validateStep()) return;
         }
@@ -118,51 +120,77 @@ export default function Stepper({ onFinish }) {
 
     return (
         <div className="w-full max-w-md mx-auto bg-card/50 backdrop-blur-md border border-white/10 rounded-2xl p-8 relative overflow-hidden min-h-[300px] flex flex-col justify-between">
-            <AnimatePresence mode="wait">
+            {status === 'success' ? (
                 <motion.div
-                    key={step}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    transition={{ duration: 0.3 }}
-                    className="flex-1 flex flex-col justify-center"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="flex-1 flex flex-col items-center justify-center text-center py-8"
                 >
-                    <h3 className="text-2xl font-bold text-text-primary mb-2">{steps[step].title}</h3>
-                    <p className="text-text-muted mb-6">{steps[step].description}</p>
-                    <div className="mb-4">
-                        {steps[step].field}
+                    <div className="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mb-6">
+                        <Check className="text-accent w-8 h-8" />
                     </div>
+                    <h3 className="text-2xl font-bold text-text-primary mb-2">Message Sent!</h3>
+                    <p className="text-text-muted">
+                        Thank you for reaching out. I'll get back to you as soon as possible.
+                    </p>
                 </motion.div>
-            </AnimatePresence>
+            ) : (
+                <>
+                    <AnimatePresence mode="wait">
+                        <motion.div
+                            key={step}
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: -20 }}
+                            transition={{ duration: 0.3 }}
+                            className="flex-1 flex flex-col justify-center"
+                        >
+                            <h3 className="text-2xl font-bold text-text-primary mb-2">{steps[step].title}</h3>
+                            <p className="text-text-muted mb-6">{steps[step].description}</p>
+                            <div className="mb-4">
+                                {steps[step].field}
+                            </div>
+                        </motion.div>
+                    </AnimatePresence>
 
-            <div className="flex justify-between items-center mt-8">
-                <button
-                    onClick={handleBack}
-                    disabled={step === 0}
-                    className="p-2 rounded-full hover:bg-white/5 disabled:opacity-0 transition-all text-text-muted"
-                >
-                    <ChevronLeft />
-                </button>
+                    <div className="flex justify-between items-center mt-8">
+                        <button
+                            onClick={handleBack}
+                            disabled={step === 0 || status === 'submitting'}
+                            className="p-2 rounded-full hover:bg-white/5 disabled:opacity-0 transition-all text-text-muted"
+                        >
+                            <ChevronLeft />
+                        </button>
 
-                <div className="flex gap-2">
-                    {steps.map((_, i) => (
-                        <div
-                            key={i}
+                        <div className="flex gap-2">
+                            {steps.map((_, i) => (
+                                <div
+                                    key={i}
+                                    className={cn(
+                                        "h-1.5 rounded-full transition-all duration-300",
+                                        i === step ? "w-8 bg-accent" : "w-1.5 bg-white/20"
+                                    )}
+                                />
+                            ))}
+                        </div>
+
+                        <button
+                            onClick={handleNext}
+                            disabled={status === 'submitting'}
                             className={cn(
-                                "h-1.5 rounded-full transition-all duration-300",
-                                i === step ? "w-8 bg-accent" : "w-1.5 bg-white/20"
+                                "p-2 rounded-full bg-accent text-white hover:opacity-90 transition-all shadow-lg shadow-accent/20 flex items-center justify-center min-w-[40px] min-h-[40px]",
+                                status === 'submitting' && "opacity-70 cursor-not-allowed"
                             )}
-                        />
-                    ))}
-                </div>
-
-                <button
-                    onClick={handleNext}
-                    className="p-2 rounded-full bg-accent text-white hover:opacity-90 transition-all shadow-lg shadow-accent/20"
-                >
-                    {step === steps.length - 1 ? <Send size={20} /> : <ChevronRight size={20} />}
-                </button>
-            </div>
+                        >
+                            {status === 'submitting' ? (
+                                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                            ) : (
+                                step === steps.length - 1 ? <Send size={20} /> : <ChevronRight size={20} />
+                            )}
+                        </button>
+                    </div>
+                </>
+            )}
         </div>
     );
 }

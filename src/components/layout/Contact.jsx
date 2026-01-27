@@ -1,7 +1,11 @@
+import { useState } from 'react';
 import Stepper from '../ui/Stepper';
 
 export default function Contact() {
+    const [status, setStatus] = useState('idle'); // 'idle' | 'submitting' | 'success' | 'error'
+
     const handleFinish = async (data) => {
+        setStatus('submitting');
         try {
             const response = await fetch('/api/send-email', {
                 method: 'POST',
@@ -12,13 +16,15 @@ export default function Contact() {
             });
 
             if (response.ok) {
-                alert('Message sent successfully! I will get back to you soon.');
+                setStatus('success');
             } else {
                 throw new Error('Failed to send message');
             }
         } catch (error) {
             console.error('Error:', error);
-            alert('Something went wrong. Please try again later.');
+            setStatus('error');
+            // Reset to idle after a delay so the user can try again
+            setTimeout(() => setStatus('idle'), 3000);
         }
     };
 
@@ -31,7 +37,10 @@ export default function Contact() {
                 </p>
             </div>
 
-            <Stepper onFinish={handleFinish} />
+            <Stepper onFinish={handleFinish} status={status} />
+            {status === 'error' && (
+                <p className="mt-4 text-red-500 font-medium">Something went wrong. Please try again.</p>
+            )}
 
             <footer className="relative mt-20 pb-10 text-center text-text-muted text-sm w-full">
                 <p>© {new Date().getFullYear()} Sourav Lenka. Built with React + Vite + Tailwind v4.</p>
