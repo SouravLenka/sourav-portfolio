@@ -30,7 +30,7 @@ export default function Stepper({ onFinish }) {
             />
         },
         {
-            title: "Email",
+            title: "Email or Contact number",
             description: "Where can I reach you?",
             field: <input
                 autoFocus
