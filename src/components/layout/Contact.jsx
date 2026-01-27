@@ -42,8 +42,22 @@ export default function Contact() {
                 <p className="mt-4 text-red-500 font-medium">Something went wrong. Please try again.</p>
             )}
 
-            <footer className="relative mt-20 pb-10 text-center text-text-muted text-sm w-full">
-                <p>© {new Date().getFullYear()} Sourav Lenka. Built with React + Vite + Tailwind v4.</p>
+            <footer className="relative mt-32 w-full max-w-6xl mx-auto">
+                <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent mb-12" />
+
+                <div className="flex flex-col md:flex-row items-center justify-between gap-8 pb-12 text-text-muted text-sm px-4">
+                    <div className="flex flex-col items-center md:items-start gap-2">
+                        <p className="text-white font-medium text-lg tracking-tight">Sourav Lenka</p>
+                        <p>© {new Date().getFullYear()} All rights reserved.</p>
+                    </div>
+
+                    <div className="flex flex-col items-center md:items-end gap-2">
+                        <p className="flex items-center gap-1.5">
+                            Built by <span className="text-white font-medium">Sourav</span>
+                        </p>
+                        <p className="text-xs opacity-50">React + Vite + Tailwind</p>
+                    </div>
+                </div>
             </footer>
         </section>
     );
