@@ -10,6 +10,7 @@ export default function Stepper({ onFinish }) {
         email: '',
         message: ''
     });
+    const [error, setError] = useState('');
 
     const steps = [
         {
@@ -30,16 +31,27 @@ export default function Stepper({ onFinish }) {
             />
         },
         {
-            title: "Email or Contact number",
+            title: "Email or Contact Number",
             description: "Where can I reach you?",
-            field: <input
-                autoFocus
-                type="email"
-                placeholder="john@example.com"
-                className="w-full bg-transparent border-b border-white/20 p-2 text-xl outline-none focus:border-accent transition-colors"
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            />
+            field: (
+                <div className="space-y-2">
+                    <input
+                        autoFocus
+                        type="text"
+                        placeholder="email@example.com or 10-digit number"
+                        className={cn(
+                            "w-full bg-transparent border-b p-2 text-xl outline-none transition-colors",
+                            error ? "border-red-500 focus:border-red-500" : "border-white/20 focus:border-accent"
+                        )}
+                        value={formData.email}
+                        onChange={(e) => {
+                            setFormData({ ...formData, email: e.target.value });
+                            setError('');
+                        }}
+                    />
+                    {error && <p className="text-red-500 text-sm">{error}</p>}
+                </div>
+            )
         },
         {
             title: "Message",
@@ -60,9 +72,44 @@ export default function Stepper({ onFinish }) {
         }
     ];
 
+    const validateStep = () => {
+        if (step === 1 && !formData.name.trim()) {
+            setError('Please enter your name');
+            return false;
+        }
+        if (step === 2) {
+            const input = formData.email.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const phoneRegex = /^\d{10}$/;
+
+            if (!input) {
+                setError('Please enter your email or contact number');
+                return false;
+            }
+            if (!emailRegex.test(input) && !phoneRegex.test(input)) {
+                setError('Please enter a valid email or 10-digit number');
+                return false;
+            }
+        }
+        if (step === 3 && !formData.message.trim()) {
+            setError('Please enter a message');
+            return false;
+        }
+        setError('');
+        return true;
+    };
+
     const handleNext = () => {
-        if (step < steps.length - 1) setStep(step + 1);
-        else onFinish(formData);
+        if (step > 0 && step < steps.length - 1) {
+            if (!validateStep()) return;
+        }
+
+        if (step < steps.length - 1) {
+            setStep(step + 1);
+            setError('');
+        } else {
+            onFinish(formData);
+        }
     };
 
     const handleBack = () => {
