@@ -22,11 +22,24 @@ function App() {
   }, [showAllProjects]);
 
   const dockItems = [
-    { icon: <Home size={20} color='white' />, href: '#home', onClick: () => setShowAllProjects(false) },
-    { icon: <FolderGit2 size={20} color='white' />, href: '#', onClick: () => setShowAllProjects(true) },
+    {
+      icon: <Home size={20} color='white' />,
+      href: '#home',
+      onClick: () => {
+        if (showAllProjects) {
+          setShowAllProjects(false);
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }
+    },
+    {
+      icon: <FolderGit2 size={20} color='white' />,
+      href: '#',
+      onClick: () => setShowAllProjects(true)
+    },
     { icon: <Github size={20} color='white' />, href: 'https://github.com/SouravLenka' },
     { icon: <Linkedin size={20} color='white' />, href: 'https://www.linkedin.com/in/sourav-lenka-a82882295' },
-    { icon: <Mail size={20} color='white' />, href: '#contact' },
     { icon: <FileDown size={20} color='white' />, href: '/resume.pdf', download: true },
   ];
 
