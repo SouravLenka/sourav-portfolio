@@ -38,7 +38,7 @@ export default function Stepper({ onFinish, status }) {
                     <input
                         autoFocus
                         type="text"
-                        placeholder="email@example.com or 10-digit number"
+                        placeholder="email@email.com or 10-digit number"
                         className={cn(
                             "w-full bg-transparent border-b p-2 text-xl outline-none transition-colors",
                             error ? "border-red-500 focus:border-red-500" : "border-white/20 focus:border-accent"
@@ -59,7 +59,7 @@ export default function Stepper({ onFinish, status }) {
             field: <textarea
                 autoFocus
                 rows={3}
-                placeholder="Tell me about your project..."
+                placeholder="Leave the message here..."
                 className="w-full bg-transparent border-b border-white/20 p-2 text-xl outline-none focus:border-accent transition-colors resize-none"
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
