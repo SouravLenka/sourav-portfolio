@@ -1,10 +1,25 @@
 import Stepper from '../ui/Stepper';
 
 export default function Contact() {
-    const handleFinish = (data) => {
-        const subject = `Portfolio Contact from ${data.name}`;
-        const body = `Name: ${data.name}%0D%0AEmail: ${data.email}%0D%0A%0D%0AMessage:%0D%0A${data.message}`;
-        window.location.href = `mailto:lenkasourav09@gmail.com?subject=${subject}&body=${body}`;
+    const handleFinish = async (data) => {
+        try {
+            const response = await fetch('/api/send-email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+
+            if (response.ok) {
+                alert('Message sent successfully! I will get back to you soon.');
+            } else {
+                throw new Error('Failed to send message');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Something went wrong. Please try again later.');
+        }
     };
 
     return (

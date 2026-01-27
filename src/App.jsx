@@ -40,6 +40,21 @@ function App() {
     },
     { icon: <Github size={20} color='white' />, href: 'https://github.com/SouravLenka' },
     { icon: <Linkedin size={20} color='white' />, href: 'https://www.linkedin.com/in/sourav-lenka-a82882295' },
+    {
+      icon: <Mail size={20} color='white' />,
+      href: '#contact',
+      onClick: (e) => {
+        if (showAllProjects) {
+          setShowAllProjects(false);
+          // Simple scroll with delay since we removed the complex logic
+          setTimeout(() => {
+            document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+          }, 600);
+        } else {
+          document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    },
     { icon: <FileDown size={20} color='white' />, href: '/resume.pdf', download: true },
   ];
 
