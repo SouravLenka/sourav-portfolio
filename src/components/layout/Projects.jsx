@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { projects } from '../../data/projects';
 import TiltedCard from '../ui/TiltedCard';
-import { X, Github, ExternalLink, Terminal, Cpu, Database, Brain, Globe, Layout, Bot, FileCode2, Calculator, Wallet, Hand, Flame, MessageSquare, FileText, ShoppingBag } from 'lucide-react';
+import { X, Github, ExternalLink, Terminal, Cpu, Database, Brain, Globe, Layout, Bot, FileCode2, Calculator, Wallet, Hand, Flame, MessageSquare, FileText, ShoppingBag, QrCode } from 'lucide-react';
 
 const projectIcons = {
     "Jarvis AI Assistant": <Bot size={64} className="text-accent/60" />,
@@ -17,6 +17,7 @@ const projectIcons = {
     "OMEN Chatbot": <MessageSquare size={64} className="text-accent/60" />,
     "AI Resume Parser": <FileText size={64} className="text-accent/60" />,
     "Mini E-Commerce Website": <ShoppingBag size={64} className="text-accent/60" />,
+    "QR Code Generator Web Application": <QrCode size={64} className="text-accent/60" />,
     "default": <Terminal size={64} className="text-accent/60" />
 };
 

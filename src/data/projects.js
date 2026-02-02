@@ -32,6 +32,15 @@ export const projects = [
     github: "https://github.com/SouravLenka/RAG-BOT.git"
   },
   {
+    title: "QR Code Generator Web Application",
+    shortDescription: "Flask-based QR Code Generator with instant preview and download.",
+    longDescription: "Developed and deployed a Flask-based QR Code Generator web application that allows users to generate QR codes from URLs or text, preview them instantly, and download the generated QR image. Features dynamic request handling and production-ready cloud deployment.",
+    tech: ["Python", "Flask", "HTML/CSS", "Jinja2", "QR Code", "Pillow", "Render"],
+    image: "https://images.unsplash.com/photo-1595079676339-1534801ad6cf?q=80&w=2070&auto=format&fit=crop",
+    github: "https://github.com/SouravLenka/QR-generator.git",
+    live: "https://qr-generator-gxi1.onrender.com"
+  },
+  {
     title: "Attendance Calculator",
     shortDescription: "Interactive Streamlit app for academic attendance planning.",
     longDescription: "A production-deployed Python application that helps students maintain target attendance. It calculates required future classes, safe-to-miss counts, and provides visual progress tracking with Matplotlib. Deployed on Streamlit Cloud.",
