@@ -1,23 +1,25 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { projects } from '../../data/projects';
-import TiltedCard from '../ui/TiltedCard';
-import { X, Github, ExternalLink, Terminal, Cpu, Database, Brain, Globe, Layout, Bot, FileCode2, Calculator, Wallet, Hand, Flame, MessageSquare, FileText, ShoppingBag, QrCode } from 'lucide-react';
+import ProjectCard from '../ui/ProjectCard';
+import { X, Github, ExternalLink, Terminal, Cpu, Database, Brain, Globe, Bot, FileText, Calculator, Wallet, Hand, Flame, MessageSquare, ShoppingBag, QrCode, Sparkles, Lightbulb, CheckCircle2 } from 'lucide-react';
 
 const projectIcons = {
-    "Jarvis AI Assistant": <Bot size={64} className="text-accent/60" />,
-    "RAG-Based PDF Question Answering Chatbot": <Brain size={64} className="text-accent/60" />,
-    "Nexus Learning Platform": <Globe size={64} className="text-accent/60" />,
-    "EcoAssist": <Cpu size={64} className="text-accent/60" />,
-    "Crude Oil Price Prediction": <Database size={64} className="text-accent/60" />,
-    "Attendance Calculator": <Calculator size={64} className="text-accent/60" />,
-    "AI Personal Finance Tracker": <Wallet size={64} className="text-accent/60" />,
-    "ISL Detection Project": <Hand size={64} className="text-accent/60" />,
-    "Firebase Basic Projects": <Flame size={64} className="text-accent/60" />,
-    "OMEN Chatbot": <MessageSquare size={64} className="text-accent/60" />,
-    "AI Resume Parser": <FileText size={64} className="text-accent/60" />,
-    "Mini E-Commerce Website": <ShoppingBag size={64} className="text-accent/60" />,
-    "QR Code Generator Web Application": <QrCode size={64} className="text-accent/60" />,
+    "Bot": <Bot size={64} className="text-accent/60" />,
+    "Brain": <Brain size={64} className="text-accent/60" />,
+    "Globe": <Globe size={64} className="text-accent/60" />,
+    "Cpu": <Cpu size={64} className="text-accent/60" />,
+    "Database": <Database size={64} className="text-accent/60" />,
+    "Calculator": <Calculator size={64} className="text-accent/60" />,
+    "Wallet": <Wallet size={64} className="text-accent/60" />,
+    "Hand": <Hand size={64} className="text-accent/60" />,
+    "Flame": <Flame size={64} className="text-accent/60" />,
+    "MessageSquare": <MessageSquare size={64} className="text-accent/60" />,
+    "FileText": <FileText size={64} className="text-accent/60" />,
+    "ShoppingBag": <ShoppingBag size={64} className="text-accent/60" />,
+    "QrCode": <QrCode size={64} className="text-accent/60" />,
+    "Story": <Sparkles size={64} className="text-accent/60" />,
+    "Mind": <Lightbulb size={64} className="text-accent/60" />,
     "default": <Terminal size={64} className="text-accent/60" />
 };
 
@@ -25,7 +27,6 @@ export default function Projects({ onOpenAll, showAll = false }) {
     const [selectedProject, setSelectedProject] = useState(null);
     const displayProjects = showAll ? projects : projects.slice(0, 4);
 
-    // Prevent scrolling when modal is open
     useEffect(() => {
         if (selectedProject) {
             document.body.style.overflow = 'hidden';
@@ -49,32 +50,12 @@ export default function Projects({ onOpenAll, showAll = false }) {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {displayProjects.map((project, index) => (
-                    <motion.div
-                        key={index}
-                        layoutId={`card-${index}`}
-                        onClick={() => setSelectedProject(project)}
-                        className="cursor-pointer group"
-                    >
-                        <TiltedCard className="h-full">
-                            <div className="bg-bg-card border border-white/5 rounded-2xl overflow-hidden h-full flex flex-col hover:border-accent/50 transition-colors shadow-lg">
-                                <div className="h-48 flex items-center justify-center bg-linear-to-br from-white/5 to-white/[0.02] relative group-hover:from-accent/10 transition-colors duration-500">
-                                    {projectIcons[project.title] || projectIcons.default}
-                                    <div className="absolute inset-x-0 bottom-0 h-px bg-linear-to-r from-transparent via-white/10 to-transparent" />
-                                </div>
-                                <div className="p-5 flex-1 flex flex-col">
-                                    <h3 className="text-xl font-bold text-white mb-2">{project.title}</h3>
-                                    <p className="text-text-muted mb-4 flex-1 text-xs line-clamp-2">{project.shortDescription}</p>
-                                    <div className="flex flex-wrap gap-2">
-                                        {project.tech.map((t) => (
-                                            <span key={t} className="px-2 py-0.5 bg-white/5 text-[10px] rounded-full text-accent border border-white/5">
-                                                {t}
-                                            </span>
-                                        ))}
-                                    </div>
-                                </div>
-                            </div>
-                        </TiltedCard>
-                    </motion.div>
+                    <ProjectCard 
+                        key={project.title} 
+                        project={project} 
+                        index={projects.indexOf(project)} 
+                        onClick={() => setSelectedProject(project)} 
+                    />
                 ))}
             </div>
 
@@ -89,7 +70,7 @@ export default function Projects({ onOpenAll, showAll = false }) {
                 </div>
             )}
 
-            <AnimatePresence>
+            <AnimatePresence mode="wait">
                 {selectedProject && (
                     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
                         <motion.div
@@ -113,7 +94,7 @@ export default function Projects({ onOpenAll, showAll = false }) {
 
                             <div className="h-64 sm:h-80 w-full flex items-center justify-center bg-linear-to-br from-white/10 to-transparent shrink-0 relative">
                                 <div className="scale-125 opacity-40">
-                                    {projectIcons[selectedProject.title] || projectIcons.default}
+                                    {projectIcons[selectedProject.iconName] || projectIcons.default}
                                 </div>
                                 <div className="absolute inset-0 bg-radial-to-t from-bg-card via-transparent to-transparent" />
                             </div>
@@ -128,12 +109,29 @@ export default function Projects({ onOpenAll, showAll = false }) {
                                     </p>
                                 </div>
 
+                                {selectedProject.features && (
+                                    <div className="mb-8">
+                                        <h4 className="text-white font-semibold mb-4 flex items-center gap-2">
+                                            <Sparkles size={20} className="text-accent" />
+                                            Key Features
+                                        </h4>
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                            {selectedProject.features.map((feature, i) => (
+                                                <div key={i} className="flex items-start gap-3 p-3 bg-white/5 rounded-xl border border-white/5">
+                                                    <CheckCircle2 size={18} className="text-accent shrink-0 mt-0.5" />
+                                                    <span className="text-text-muted text-sm">{feature}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
                                     <div>
                                         <h4 className="text-white font-semibold mb-3">Technologies</h4>
                                         <div className="flex flex-wrap gap-2">
                                             {selectedProject.tech.map((t) => (
-                                                <span key={t} className="px-3 py-1 bg-white/10 text-sm rounded-md text-white">
+                                                <span key={t} className="px-3 py-1 bg-white/10 text-sm rounded-md text-white border border-white/5">
                                                     {t}
                                                 </span>
                                             ))}
@@ -148,10 +146,10 @@ export default function Projects({ onOpenAll, showAll = false }) {
                                                         href={selectedProject.github}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
-                                                        className="flex items-center gap-2 text-accent hover:text-white transition-colors"
+                                                        className="flex items-center gap-2 text-accent hover:text-white transition-colors group"
                                                     >
                                                         <Github size={20} />
-                                                        View Source on GitHub
+                                                        <span className="group-hover:translate-x-1 transition-transform">View Source on GitHub</span>
                                                     </a>
                                                 )}
                                                 {selectedProject.live && (
@@ -159,10 +157,10 @@ export default function Projects({ onOpenAll, showAll = false }) {
                                                         href={selectedProject.live}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
-                                                        className="flex items-center gap-2 text-accent hover:text-white transition-colors"
+                                                        className="flex items-center gap-2 text-accent hover:text-white transition-colors group"
                                                     >
                                                         <ExternalLink size={20} />
-                                                        View Live Demo
+                                                        <span className="group-hover:translate-x-1 transition-transform">View Live Demo</span>
                                                     </a>
                                                 )}
                                             </div>
