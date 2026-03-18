@@ -67,7 +67,7 @@ export default function Stepper({ onFinish, status }) {
         },
         {
             title: "All Set?",
-            description: "Ready to send your message.",
+            description: "Click the blue button send your message.",
             field: <div className="text-lg text-text-muted">I'll get back to you as soon as possible.</div>
         }
     ];
