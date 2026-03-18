@@ -44,7 +44,7 @@ export default function Projects({ onOpenAll, showAll = false }) {
                 </h2>
                 <div className="h-1 w-20 bg-accent rounded-full mb-8" />
                 <p className="text-text-muted text-base max-w-2xl">
-                    {showAll ? 'Explore my full catalog of work.' : 'Python automation tools, AI-assisted systems, cloud-backed applications, and full-stack projects.'}
+                    {showAll ? 'Explore my full catalog of work.' : 'Python automation tools, AI-assisted systems, cloud-backed applications, and Python full-stack projects.'}
                 </p>
             </div>
 
