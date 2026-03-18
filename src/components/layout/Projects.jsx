@@ -37,7 +37,7 @@ export default function Projects({ onOpenAll, showAll = false }) {
     }, [selectedProject]);
 
     return (
-        <section id="projects" className={`py-20 px-4 min-h-screen relative w-full max-w-7xl mx-auto ${selectedProject ? 'z-50' : 'z-10'}`}>
+        <section id="projects" className={`py-20 px-1 md:px-2 min-h-screen relative w-full max-w-[1440px] mx-auto ${selectedProject ? 'z-50' : 'z-10'}`}>
             <div className="mb-16">
                 <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
                     {showAll ? 'All Projects' : 'Featured Projects'}

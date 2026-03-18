@@ -3,7 +3,7 @@ import './Introduction.css';
 
 const Introduction = () => {
     return (
-        <section id="introduction" className="py-20 px-4 relative z-10 w-full max-w-7xl mx-auto">
+        <section id="introduction" className="py-20 px-1 md:px-2 relative z-10 w-full max-w-[1440px] mx-auto">
             <div className="mb-12">
                 <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Introduction</h2>
                 <div className="h-1 w-20 bg-accent rounded-full" />

@@ -31,6 +31,35 @@ export default function Hero() {
               rotationInterval={2500}
             />
           </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="pt-10 flex flex-col items-center"
+          >
+            <button
+              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+              className="group relative px-8 py-3 bg-white/5 border border-white/10 text-white font-bold text-lg rounded-full overflow-hidden transition-all duration-500 hover:scale-105 active:scale-95 shadow-xl hover:bg-white/10"
+            >
+              {/* Subtle Thematic Glow */}
+              <div className="absolute inset-0 bg-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              
+              {/* Button Text */}
+              <span className="relative z-10 flex items-center gap-2">
+                Let’s Connect
+                <motion.span
+                  animate={{ x: [0, 5, 0] }}
+                  transition={{ repeat: Infinity, duration: 1.5 }}
+                >
+                  →
+                </motion.span>
+              </span>
+            </button>
+            
+            {/* Subtle glow underneath */}
+            <div className="w-24 h-1 bg-accent/30 blur-xl mt-3 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          </motion.div>
         </motion.div>
 
       </div>

@@ -29,7 +29,7 @@ export default function Contact() {
     };
 
     return (
-        <section id="contact" className="py-20 px-4 min-h-[80vh] flex flex-col items-center justify-center relative z-10">
+        <section id="contact" className="py-20 px-1 md:px-2 min-h-[80vh] flex flex-col items-center justify-center relative z-10 max-w-[1440px] mx-auto">
             <div className="text-center mb-12">
                 <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Get in Touch</h2>
                 <p className="text-text-muted text-base max-w-xl mx-auto">
@@ -45,7 +45,7 @@ export default function Contact() {
             <footer className="relative mt-32 w-full max-w-6xl mx-auto">
                 <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent mb-12" />
 
-                <div className="flex flex-col md:flex-row items-center justify-between gap-8 pb-12 text-text-muted text-sm px-4">
+                <div className="flex flex-col md:flex-row items-center justify-between gap-8 pb-12 text-text-muted text-sm px-1 md:px-2">
                     <div className="flex flex-col items-center md:items-start gap-2">
                         <p className="text-white font-medium text-lg tracking-tight">Sourav Lenka</p>
                         <p>© {new Date().getFullYear()} All rights reserved.</p>

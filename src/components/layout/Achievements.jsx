@@ -5,7 +5,7 @@ import './Achievements.css';
 const Achievements = () => {
     return (
         <section id="achievements" className="achievements-section relative z-10 overflow-hidden py-20">
-            <div className="max-w-7xl mx-auto px-4 mb-16">
+            <div className="max-w-[1440px] mx-auto px-1 md:px-2 mb-16">
                 <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Achievements</h2>
                 <div className="h-1 w-20 bg-accent rounded-full mb-8" />
                 <p className="text-text-muted text-base max-w-2xl">

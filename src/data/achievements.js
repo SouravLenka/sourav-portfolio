@@ -78,21 +78,5 @@ export const achievements = [
         description: "Student leadership and technology engagement program.",
         icon: "award",
         gradient: ["#4f46e5", "#818cf8"] // Indigo/Blue
-    },
-    {
-        title: "1M1B AI + Sustainability Virtual Internship",
-        organization: "IBM SkillsBuild",
-        category: "Programs & Recognition",
-        description: "Explored AI applications for sustainability and developed future-ready tech skills.",
-        icon: "leaf",
-        gradient: ["#059669", "#10b981"] // Green
-    },
-    {
-        title: "Google AI-ML Virtual Internship",
-        organization: "EduSkills Foundation, 2026",
-        category: "Programs & Recognition",
-        description: "Practical experience in Artificial Intelligence and Machine Learning concepts.",
-        icon: "brain",
-        gradient: ["#ea4335", "#fbbc05"] // Red/Yellow
     }
 ];

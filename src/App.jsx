@@ -6,6 +6,7 @@ import Dock from './components/ui/Dock';
 import Hero from './components/layout/MainHero';
 import Introduction from './components/layout/Introduction';
 import Projects from './components/layout/Projects';
+import Skills from './components/layout/Skills';
 import Achievements from './components/layout/Achievements';
 import Contact from './components/layout/Contact';
 import { Home, FolderGit2, Github, Mail, FileDown, Linkedin, Award } from 'lucide-react';
@@ -107,11 +108,12 @@ function App() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.5 }}
-              className="pb-32"
+              className="pb-32 px-0.5 md:px-2"
             >
               <Hero />
               <Introduction />
               <Projects onOpenAll={() => setShowAllProjects(true)} />
+              <Skills />
               <Achievements />
               <Contact />
             </motion.div>
@@ -122,7 +124,7 @@ function App() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.5 }}
-              className="pt-20 px-4 pb-32"
+              className="pt-20 px-1 md:px-4 pb-32"
             >
               <Projects showAll={true} />
               <div className="flex justify-center mt-12 mb-20">
