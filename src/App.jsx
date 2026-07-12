@@ -40,7 +40,7 @@ function App() {
       onClick: () => setShowAllProjects(true)
     },
     { icon: <Github size={20} color='white' />, href: 'https://github.com/SouravLenka' },
-    { icon: <Linkedin size={20} color='white' />, href: 'https://www.linkedin.com/in/sourav-lenka-a82882295' },
+    { icon: <Linkedin size={20} color='white' />, href: 'https://www.linkedin.com/in/souravlenkaaa' },
     {
       icon: <Mail size={20} color='white' />,
       href: '#contact',
