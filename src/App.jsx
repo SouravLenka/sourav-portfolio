@@ -78,43 +78,53 @@ function App() {
       {/* Cyber Preloader Intro */}
       {isLoading && <CyberPreloader onComplete={() => setIsLoading(false)} />}
 
-      {/* Persistent Backgrounds */}
-      {!showAllProjects && (
-        <motion.div
-          initial={{ opacity: 1 }}
-          animate={{ opacity: 1 }}
-          style={{ opacity: backgroundOpacity, scale: backgroundScale }}
-          className="fixed inset-0 z-0 pointer-events-none"
-        >
-          <Prism
-            animationType="rotate"
-            timeScale={0.5}
-            height={3.5}
-            baseWidth={5.5}
-            scale={3.6}
-            hueShift={0}
-            colorFrequency={1}
-            noise={0}
-            glow={1}
-          />
-        </motion.div>
-      )}
-
-      {showAllProjects && (
-        <div className="fixed inset-0 z-0">
-          <DotGrid
-            dotSize={5}
-            gap={15}
-            baseColor="#1e1b4b"
-            activeColor="#6366f1"
-            proximity={120}
-            shockRadius={250}
-            shockStrength={5}
-            resistance={750}
-            returnDuration={1.5}
-          />
-        </div>
-      )}
+      {/* Persistent Backgrounds with Smooth Cross-Fade */}
+      <AnimatePresence mode="wait">
+        {!showAllProjects ? (
+          <motion.div
+            key="prism-bg"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+            style={{ opacity: backgroundOpacity, scale: backgroundScale }}
+            className="fixed inset-0 z-0 pointer-events-none"
+          >
+            <Prism
+              animationType="rotate"
+              timeScale={0.5}
+              height={3.5}
+              baseWidth={5.5}
+              scale={3.6}
+              hueShift={0}
+              colorFrequency={1}
+              noise={0}
+              glow={1}
+            />
+          </motion.div>
+        ) : (
+          <motion.div
+            key="dotgrid-bg"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+            className="fixed inset-0 z-0"
+          >
+            <DotGrid
+              dotSize={5}
+              gap={15}
+              baseColor="#1e1b4b"
+              activeColor="#6366f1"
+              proximity={120}
+              shockRadius={250}
+              shockStrength={5}
+              resistance={750}
+              returnDuration={1.5}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <div className="relative z-10">
         <AnimatePresence mode="wait">
@@ -123,8 +133,8 @@ function App() {
               key="landing"
               initial={{ opacity: 0, scale: 0.98 }}
               animate={isLoading ? { opacity: 0, scale: 0.98 } : { opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.8, ease: [0.25, 1, 0.5, 1] }}
+              exit={{ opacity: 0, y: -15, scale: 0.98 }}
+              transition={{ duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
               className="pb-32 px-0.5 md:px-2"
             >
               <Hero />
@@ -137,10 +147,10 @@ function App() {
           ) : (
             <motion.div
               key="projects-page"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5 }}
+              initial={{ opacity: 0, y: 15, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -15, scale: 0.98 }}
+              transition={{ duration: 0.4, ease: [0.25, 1, 0.5, 1] }}
               className="pt-20 px-1 md:px-4 pb-32"
             >
               <Projects showAll={true} />

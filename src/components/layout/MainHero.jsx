@@ -3,9 +3,9 @@ import RotatingText from '../ui/RotatingText';
 
 export default function Hero() {
   return (
-    <section id="home" className="relative w-full h-screen flex flex-col items-center justify-center overflow-hidden">
+    <section id="home" className="relative w-full min-h-[100dvh] py-16 md:py-0 flex flex-col items-center justify-center overflow-hidden">
       {/* Content Layer */}
-      <div className="relative z-10 text-center px-4 space-y-8 max-w-4xl mx-auto">
+      <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 space-y-8 max-w-4xl mx-auto my-auto">
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -13,14 +13,14 @@ export default function Hero() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="space-y-4 flex flex-col items-center"
         >
-          <h1 className="text-6xl md:text-8xl font-black tracking-tight text-white mb-4">
+          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-white mb-4">
             Hi, I’m <br />
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-accent via-white to-accent animate-gradient-slow">Sourav Lenka</span>
           </h1>
           <div className="flex justify-center items-center h-12">
             <RotatingText
               texts={['Python', 'DevOps', 'Automation', 'AI Systems']}
-              mainClassName="px-4 py-2 bg-accent/20 text-accent font-bold text-2xl md:text-4xl rounded-lg overflow-hidden flex items-center justify-center border border-accent/30 backdrop-blur-sm"
+              mainClassName="px-3 sm:px-4 py-1.5 sm:py-2 bg-accent/20 text-accent font-bold text-xl sm:text-2xl md:text-4xl rounded-lg overflow-hidden flex items-center justify-center border border-accent/30 backdrop-blur-sm"
               staggerFrom={"last"}
               initial={{ y: "100%", opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
