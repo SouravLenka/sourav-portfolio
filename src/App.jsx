@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import Prism from './components/background/Prism';
 import DotGrid from './components/background/DotGrid';
 import Dock from './components/ui/Dock';
+import CyberPreloader from './components/ui/CyberPreloader';
 import Hero from './components/layout/MainHero';
 import Introduction from './components/layout/Introduction';
 import Projects from './components/layout/Projects';
@@ -12,10 +13,23 @@ import Contact from './components/layout/Contact';
 import { Home, FolderGit2, Github, Mail, FileDown, Linkedin, Award } from 'lucide-react';
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
   const [showAllProjects, setShowAllProjects] = useState(false);
   const { scrollYProgress } = useScroll();
   const backgroundOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0.4]);
   const backgroundScale = useTransform(scrollYProgress, [0, 0.3], [1, 1.1]);
+
+  // Prevent background scrolling while loading
+  useEffect(() => {
+    if (isLoading) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isLoading]);
 
   // Scroll to top when switching views
   useEffect(() => {
@@ -61,6 +75,9 @@ function App() {
 
   return (
     <main className="relative bg-bg-main min-h-screen text-text-primary selection:bg-accent selection:text-white">
+      {/* Cyber Preloader Intro */}
+      {isLoading && <CyberPreloader onComplete={() => setIsLoading(false)} />}
+
       {/* Persistent Backgrounds */}
       {!showAllProjects && (
         <motion.div
@@ -104,10 +121,10 @@ function App() {
           {!showAllProjects ? (
             <motion.div
               key="landing"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={isLoading ? { opacity: 0, scale: 0.98 } : { opacity: 1, scale: 1 }}
               exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.8, ease: [0.25, 1, 0.5, 1] }}
               className="pb-32 px-0.5 md:px-2"
             >
               <Hero />
