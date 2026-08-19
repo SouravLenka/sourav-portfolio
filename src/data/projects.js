@@ -1,5 +1,33 @@
 export const projects = [
   {
+    title: "Astral Rift",
+    shortDescription:
+      "Local co-op roguelite space shooter built with Godot 4 & C#/.NET featuring event-driven architecture & shader visuals.",
+    longDescription:
+      "Astral Rift is a high-octane local co-op roguelite space shooter built in Godot 4 (.NET / GDScript). It features a dual-pilot combat system (Cyan Nova Pulse & Purple Rift Collapse), dynamic arena velocity physics, procedural wave scaling, floating damage indicators, combo streak mechanics, and an event-driven decoupled HUD powered by a global GameEvents bus. Built with shader-driven cinematic intro sequences and modular UI component architecture.",
+    features: [
+      "2-Player Local Co-Op (WASD & Arrow controls)",
+      "Event-Driven Global Event Bus Architecture (GameEvents.gd)",
+      "Distinct Pilot Ultimates: Nova Pulse & Rift Collapse",
+      "Procedural Enemy Waves & Scalable Boss Encounters",
+      "Dynamic Combo Streak System & Floating Damage FX",
+      "Shader-Driven Cinematic SORA Branding & Rift Visuals",
+      "Modular Scene Architecture with Decoupled UI HUD Components",
+    ],
+    tech: [
+      "Godot 4",
+      "GDScript",
+      "C# / .NET 8",
+      "Shaders (GLSL)",
+      "Event Bus Pattern",
+      "Game Architecture",
+    ],
+    image:
+      "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?q=80&w=2074&auto=format&fit=crop",
+    github: "https://github.com/SouravLenka/Astral-Rift.git",
+    iconName: "Gamepad",
+  },
+  {
     title: "AI StoryTeller",
     shortDescription:
       "Transforms uploaded images into creative, engaging stories using a two-stage AI pipeline.",

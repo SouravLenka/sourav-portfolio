@@ -19,7 +19,7 @@ export default function Hero() {
           </h1>
           <div className="flex justify-center items-center h-12">
             <RotatingText
-              texts={['Python', 'DevOps', 'Automation', 'AI Systems']}
+              texts={['AI & Automation Engineer', 'LLMs & RAG Systems', 'Python Automation', 'Agentic Workflows']}
               mainClassName="px-3 sm:px-4 py-1.5 sm:py-2 bg-accent/20 text-accent font-bold text-xl sm:text-2xl md:text-4xl rounded-lg overflow-hidden flex items-center justify-center border border-accent/30 backdrop-blur-sm"
               staggerFrom={"last"}
               initial={{ y: "100%", opacity: 0 }}

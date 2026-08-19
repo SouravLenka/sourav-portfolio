@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion';
 import TiltedCard from './TiltedCard';
-import { Terminal, Cpu, Database, Brain, Globe, Bot, FileText, Calculator, Wallet, Hand, Flame, MessageSquare, ShoppingBag, QrCode, Sparkles, Lightbulb } from 'lucide-react';
+import { Terminal, Cpu, Database, Brain, Globe, Bot, FileText, Calculator, Wallet, Hand, Flame, MessageSquare, ShoppingBag, QrCode, Sparkles, Lightbulb, Gamepad } from 'lucide-react';
 
 const projectIcons = {
+    "Gamepad": <Gamepad size={64} className="text-accent/60" />,
     "Bot": <Bot size={64} className="text-accent/60" />,
     "Brain": <Brain size={64} className="text-accent/60" />,
     "Globe": <Globe size={64} className="text-accent/60" />,

@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { projects } from '../../data/projects';
 import ProjectCard from '../ui/ProjectCard';
-import { X, Github, ExternalLink, Terminal, Cpu, Database, Brain, Globe, Bot, FileText, Calculator, Wallet, Hand, Flame, MessageSquare, ShoppingBag, QrCode, Sparkles, Lightbulb, CheckCircle2 } from 'lucide-react';
+import { X, Github, ExternalLink, Terminal, Cpu, Database, Brain, Globe, Bot, FileText, Calculator, Wallet, Hand, Flame, MessageSquare, ShoppingBag, QrCode, Sparkles, Lightbulb, CheckCircle2, Gamepad } from 'lucide-react';
 
 const projectIcons = {
+    "Gamepad": <Gamepad size={64} className="text-accent/60" />,
     "Bot": <Bot size={64} className="text-accent/60" />,
     "Brain": <Brain size={64} className="text-accent/60" />,
     "Globe": <Globe size={64} className="text-accent/60" />,

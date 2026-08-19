@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const SKILLS = ['PYTHON', 'DEVOPS', 'AUTOMATION', 'AI SYSTEMS'];
+const SKILLS = ['AI & RAG PIPELINES', 'AGENTIC WORKFLOWS', 'PYTHON AUTOMATION', 'AI & AUTOMATION ENGINEER'];
 
 export default function CyberPreloader({ onComplete }) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -58,14 +58,14 @@ export default function CyberPreloader({ onComplete }) {
               <span className="text-white font-bold">SOURAV LENKA</span>
             </div>
             <div className="text-accent/80">
-              {isDone ? 'SYSTEM_READY' : 'LOADING_EXPERIENCE'}
+              {isDone ? 'SYSTEM_READY' : 'INITIALIZING_AI_PIPELINE'}
             </div>
           </div>
 
           {/* Center Stage: Kinetic Skill Morph */}
           <div className="w-full max-w-2xl mx-auto text-center relative z-10 my-auto">
             <div className="text-[11px] font-mono tracking-[0.4em] text-accent/70 uppercase mb-4">
-              {isDone ? 'WELCOME TO THE PORTFOLIO' : `[ 0${currentIndex + 1} / 04 ] ARCHITECTURE`}
+              {isDone ? 'WELCOME TO THE PORTFOLIO' : `[ 0${currentIndex + 1} / 0${SKILLS.length} ] AI & AUTOMATION ARCHITECTURE`}
             </div>
             
             {/* Animated Skill Title */}
@@ -77,7 +77,7 @@ export default function CyberPreloader({ onComplete }) {
                   animate={{ y: 0, opacity: 1, filter: 'blur(0px)' }}
                   exit={{ y: -25, opacity: 0, filter: 'blur(8px)' }}
                   transition={{ duration: 0.35, ease: 'easeOut' }}
-                  className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-accent to-indigo-300 drop-shadow-[0_0_30px_rgba(56,189,248,0.5)] uppercase"
+                  className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-accent to-indigo-300 drop-shadow-[0_0_30px_rgba(56,189,248,0.5)] uppercase"
                 >
                   {isDone ? 'SOURAV LENKA' : SKILLS[currentIndex]}
                 </motion.div>
@@ -101,7 +101,7 @@ export default function CyberPreloader({ onComplete }) {
 
           {/* Bottom Footer Info */}
           <div className="flex justify-between items-center text-[10px] sm:text-xs font-mono tracking-widest text-slate-500 uppercase relative z-10">
-            <div>INIT // CORE PIPELINE</div>
+            <div>INIT // AGENTIC AI PIPELINE</div>
             <div className="text-slate-400">SCROLL DOWN TO EXPLORE</div>
           </div>
 

@@ -20,19 +20,19 @@ const Introduction = () => {
                     <div className="lg:col-span-8 space-y-6">
                         <p className="text-xl md:text-2xl text-white leading-relaxed font-medium">
                             Hi, I’m <br />
-                            <span className="bg-clip-text text-transparent bg-gradient-to-r from-accent via-white to-accent animate-gradient-slow font-bold">Sourav Lenka</span>, a Python and DevOps-oriented Computer Science undergraduate with a strong interest in building reliable, cloud-ready, and automation-driven systems.
+                            <span className="bg-clip-text text-transparent bg-gradient-to-r from-accent via-white to-accent animate-gradient-slow font-bold">Sourav Lenka</span>, an aspiring <span className="text-accent font-bold">AI & Automation Engineer</span> and Computer Science undergraduate dedicated to building intelligent agentic systems, autonomous workflows, and cloud-backed AI applications.
                         </p>
 
                         <p className="text-lg text-text-muted leading-relaxed">
-                            I enjoy working with <span className="text-white font-medium">Python, Linux, AWS</span>, and modern DevOps practices to solve real-world problems and develop practical, scalable applications.
+                            I specialize in leveraging <span className="text-white font-medium">Python, LLMs, RAG Pipelines, Vector Databases (FAISS/ChromaDB), and DevOps Cloud Infrastructure</span> to automate complex processes and engineer resilient, self-sustaining AI solutions.
                         </p>
 
                         <p className="text-lg text-text-muted leading-relaxed">
-                            I’ve worked on projects such as AI-powered tools, RAG-based chatbots, OCR-driven resume parsers, finance and attendance trackers, and cloud-backed applications, gaining hands-on experience in <span className="text-white font-medium">Python automation, testing and debugging, CI/CD concepts, databases (MySQL, Firebase)</span>, and Streamlit-based dashboards.
+                            My portfolio spans <span className="text-white font-medium">AI document intelligence (Vision-Language OCR), RAG doubt-resolution systems, system automation bots, computer vision pipelines, and full-stack cloud applications</span>—combining deep AI integration with practical end-to-end software engineering.
                         </p>
 
                         <p className="text-lg text-text-muted leading-relaxed">
-                            I’m continuously learning and improving my skills in cloud technologies, DevOps workflows, and AI systems, with the goal of building efficient, maintainable, and industry-ready solutions.
+                            I am driven to pioneer continuous automation workflows, agentic decision-making systems, and production-ready AI architectures that deliver high-impact real-world automation.
                         </p>
                     </div>
 
@@ -40,7 +40,12 @@ const Introduction = () => {
                         <div className="glass-card p-8 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md">
                             <h3 className="text-accent font-bold mb-4 uppercase tracking-wider text-sm">Focus Areas</h3>
                             <ul className="space-y-3">
-                                {['Python Automation', 'Cloud Infrastructure', 'DevOps Practices', 'AI-Driven Systems'].map((item) => (
+                                {[
+                                    'AI & Agentic Workflows',
+                                    'LLMs & RAG Pipelines',
+                                    'Python & System Automation',
+                                    'Cloud & DevOps Infrastructure'
+                                ].map((item) => (
                                     <li key={item} className="flex items-center gap-3 text-white/80">
                                         <span className="w-1.5 h-1.5 rounded-full bg-accent" />
                                         {item}
