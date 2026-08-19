@@ -4,13 +4,14 @@ import Prism from './components/background/Prism';
 import DotGrid from './components/background/DotGrid';
 import Dock from './components/ui/Dock';
 import CyberPreloader from './components/ui/CyberPreloader';
+import OmenAgent from './components/ui/OmenAgent';
 import Hero from './components/layout/MainHero';
 import Introduction from './components/layout/Introduction';
 import Projects from './components/layout/Projects';
 import Skills from './components/layout/Skills';
 import Achievements from './components/layout/Achievements';
 import Contact from './components/layout/Contact';
-import { Home, FolderGit2, Github, Mail, FileDown, Linkedin, Award } from 'lucide-react';
+import { Home, FolderGit2, Github, Mail, FileDown, Linkedin } from 'lucide-react';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -168,6 +169,7 @@ function App() {
       </div>
 
       <Dock items={dockItems} />
+      <OmenAgent />
     </main>
   );
 }
