@@ -23,15 +23,15 @@ const Introduction = () => {
                             <span className="bg-clip-text text-transparent bg-gradient-to-r from-accent via-white to-accent animate-gradient-slow font-bold">Sourav Lenka</span>, an aspiring <span className="text-accent font-bold">AI & Automation Engineer</span> and Computer Science undergraduate dedicated to building intelligent agentic systems, autonomous workflows, and cloud-backed AI applications.
                         </p>
 
-                        <p className="text-lg text-text-muted leading-relaxed">
-                            I specialize in leveraging <span className="text-white font-medium">Python, LLMs, RAG Pipelines, Vector Databases (FAISS/ChromaDB), and DevOps Cloud Infrastructure</span> to automate complex processes and engineer resilient, self-sustaining AI solutions.
+                        <p className="text-lg text-white font-medium leading-relaxed">
+                            I specialize in leveraging Python, LLMs, RAG Pipelines, Vector Databases (FAISS/ChromaDB), and DevOps Cloud Infrastructure to automate complex processes and engineer resilient, self-sustaining AI solutions.
                         </p>
 
-                        <p className="text-lg text-text-muted leading-relaxed">
-                            My portfolio spans <span className="text-white font-medium">AI document intelligence (Vision-Language OCR), RAG doubt-resolution systems, system automation bots, computer vision pipelines, and full-stack cloud applications</span>—combining deep AI integration with practical end-to-end software engineering.
+                        <p className="text-lg text-white font-medium leading-relaxed">
+                            My portfolio spans AI document intelligence (Vision-Language OCR), RAG doubt-resolution systems, system automation bots, computer vision pipelines, and full-stack cloud applications—combining deep AI integration with practical end-to-end software engineering.
                         </p>
 
-                        <p className="text-lg text-text-muted leading-relaxed">
+                        <p className="text-lg text-white font-medium leading-relaxed">
                             I am driven to pioneer continuous automation workflows, agentic decision-making systems, and production-ready AI architectures that deliver high-impact real-world automation.
                         </p>
                     </div>
