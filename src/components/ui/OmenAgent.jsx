@@ -91,29 +91,90 @@ const OmenAgent = ({ isOpenExternal, onCloseExternal }) => {
     setMessages((prev) => [...prev, userMsg]);
     setIsTyping(true);
 
-    // Simulate cyber neural processing time for fluid UX
-    setTimeout(async () => {
-      const response = await queryOmen(textToProcess);
-      playMessageReceivedSound();
+    // Prepare recent conversation history for contextual AI reasoning
+    const historyPayload = messages
+      .filter((m) => m.id !== 'welcome')
+      .slice(-6)
+      .map((m) => ({
+        sender: m.sender,
+        text: m.text
+      }));
 
-      const newId = `omen-${Date.now()}`;
-      const omenMsg = {
-        id: newId,
-        sender: 'omen',
-        title: response.title,
-        text: response.text,
-        actions: response.actions || [],
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      };
+    let omenResult = null;
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
 
-      setMessages((prev) => [...prev, omenMsg]);
-      setIsTyping(false);
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          message: textToProcess,
+          history: historyPayload
+        }),
+        signal: controller.signal
+      });
 
-      if (isSpeechActive()) {
-        setSpeakingMsgId(newId);
-        speakOmenText(response.text);
+      clearTimeout(timeoutId);
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data && (data.text || data.answer)) {
+          omenResult = {
+            title: data.title || 'OMEN // INTELLIGENCE',
+            text: data.text || data.answer,
+            actions: data.actions || []
+          };
+        }
       }
-    }, 600);
+    } catch (apiErr) {
+      clearTimeout(timeoutId);
+      console.warn('[OMEN Client] Network/API error, falling back to local engine:', apiErr?.message || apiErr);
+    }
+
+    // Local Deterministic Engine Fallback if AI or API failed
+    if (!omenResult) {
+      try {
+        const fallback = await queryOmen(textToProcess);
+        omenResult = {
+          title: fallback.title || 'OMEN // LOCAL KNOWLEDGE',
+          text: fallback.text,
+          actions: fallback.actions || []
+        };
+      } catch (localErr) {
+        omenResult = {
+          title: 'OMEN // SYSTEM NOTICE',
+          text: "I am having trouble connecting to my neural network right now. You can explore Sourav's projects, skills, and resume using the options below.",
+          actions: [
+            { label: "View Projects", actionType: "scroll", target: "projects" },
+            { label: "View Resume", actionType: "link", target: "/resume.pdf", download: true },
+            { label: "Contact Sourav", actionType: "scroll", target: "contact" }
+          ]
+        };
+      }
+    }
+
+    playMessageReceivedSound();
+
+    const newId = `omen-${Date.now()}`;
+    const omenMsg = {
+      id: newId,
+      sender: 'omen',
+      title: omenResult.title,
+      text: omenResult.text,
+      actions: omenResult.actions || [],
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    };
+
+    setMessages((prev) => [...prev, omenMsg]);
+    setIsTyping(false);
+
+    if (isSpeechActive()) {
+      setSpeakingMsgId(newId);
+      speakOmenText(omenResult.text);
+    }
   };
 
   const handleSpeakMessage = (msgId, text) => {

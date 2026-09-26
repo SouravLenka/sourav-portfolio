@@ -1,4 +1,4 @@
-import { KNOWLEDGE_TOPICS, DEFAULT_FALLBACK, SOURAV_PROFILE } from '../data/omenKnowledge';
+import { KNOWLEDGE_TOPICS, DEFAULT_FALLBACK, SOURAV_PROFILE } from '../data/omenKnowledge.js';
 
 /**
  * Process a user query against OMEN's knowledge base.
