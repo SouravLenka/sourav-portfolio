@@ -1,17 +1,38 @@
 import { KNOWLEDGE_TOPICS, DEFAULT_FALLBACK, SOURAV_PROFILE } from '../data/omenKnowledge.js';
+import { retrievePortfolioContext } from './portfolioRetriever.js';
 
 /**
  * Process a user query against OMEN's knowledge base.
  * @param {string} userQuery
  * @returns {Promise<{ title: string, text: string, actions?: Array, intent?: string }>}
  */
-export async function queryOmen(userQuery) {
+export async function queryOmen(userQuery, history = []) {
   if (!userQuery || typeof userQuery !== 'string') {
     return DEFAULT_FALLBACK;
   }
 
   const normalized = userQuery.toLowerCase().trim();
   const words = normalized.split(/\W+/).filter(Boolean);
+
+  if (/\b(explain|more|detail|elaborate|expand|clarify)\b/i.test(normalized) && history.length) {
+    const { relevantProjects } = retrievePortfolioContext(userQuery, history);
+    const project = relevantProjects[0];
+    if (project) {
+      const details = [
+        project.longDescription || project.shortDescription,
+        project.features?.length
+          ? `**Key features**\n${project.features.map((feature) => `- ${feature}`).join('\n')}`
+          : '',
+        project.tech?.length ? `**Built with:** ${project.tech.join(', ')}` : ''
+      ].filter(Boolean);
+
+      return {
+        title: `${project.title} — More Details`,
+        text: details.join('\n\n'),
+        actions: []
+      };
+    }
+  }
 
   let bestMatch = null;
   let highestScore = 0;

@@ -114,7 +114,7 @@ export default async function handler(req, res) {
 
   // 6. Fallback path: local deterministic OMEN engine
   try {
-    const localResult = await queryOmen(message);
+    const localResult = await queryOmen(message, history);
     return sendResponse(res, 200, {
       success: true,
       title: localResult.title,

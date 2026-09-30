@@ -13,6 +13,18 @@ import {
 import { QUICK_PROMPTS, SOURAV_PROFILE } from '../../data/omenKnowledge';
 import './OmenAgent.css';
 
+const createWelcomeMessage = () => ({
+  id: 'welcome',
+  sender: 'omen',
+  title: 'OMEN Intelligence Protocol Initialized',
+  text: `Greetings! I am **OMEN**, Sourav Lenka's autonomous AI assistant.\n\nAsk me anything about Sourav's **AI/RAG projects**, **technical skills**, **experience**, or select a topic below to get started.`,
+  actions: [
+    { label: 'About Sourav', actionType: 'query', target: 'Who is Sourav Lenka?' },
+    { label: 'Resume', actionType: 'link', target: '/resume.pdf', download: true }
+  ],
+  timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+});
+
 const OmenAgent = ({ isOpenExternal, onCloseExternal }) => {
   const [isOpenInternal, setIsOpenInternal] = useState(false);
   const [inputQuery, setInputQuery] = useState('');
@@ -20,23 +32,13 @@ const OmenAgent = ({ isOpenExternal, onCloseExternal }) => {
   const [muted, setMuted] = useState(false);
   const [speechOn, setSpeechOn] = useState(false);
   const [speakingMsgId, setSpeakingMsgId] = useState(null);
-  const [messages, setMessages] = useState([
-    {
-      id: 'welcome',
-      sender: 'omen',
-      title: 'OMEN Intelligence Protocol Initialized',
-      text: `Greetings! I am **OMEN**, Sourav Lenka's autonomous AI assistant.\n\nAsk me anything about Sourav's **AI/RAG projects**, **technical skills**, **experience**, or select a topic below to get started.`,
-      actions: [
-        { label: "⚡ About Sourav", actionType: "query", target: "Who is Sourav Lenka?" },
-        { label: "🚀 RAG Projects", actionType: "scroll", target: "projects" },
-        { label: "📄 Resume", actionType: "link", target: "/resume.pdf", download: true }
-      ],
-      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-    }
-  ]);
+  const [messages, setMessages] = useState(() => [createWelcomeMessage()]);
 
   const chatEndRef = useRef(null);
   const inputRef = useRef(null);
+  const activeRequestRef = useRef(null);
+  const sessionIdRef = useRef(0);
+  const wasOpenRef = useRef(false);
 
   const isOpen = isOpenExternal !== undefined ? isOpenExternal : isOpenInternal;
 
@@ -47,11 +49,16 @@ const OmenAgent = ({ isOpenExternal, onCloseExternal }) => {
 
   useEffect(() => {
     if (isOpen) {
+      wasOpenRef.current = true;
       playOpenSound();
       setTimeout(() => inputRef.current?.focus(), 300);
     } else {
       stopOmenSpeech();
       setSpeakingMsgId(null);
+      if (wasOpenRef.current) {
+        clearSessionContext();
+        wasOpenRef.current = false;
+      }
     }
   }, [isOpen]);
 
@@ -61,6 +68,10 @@ const OmenAgent = ({ isOpenExternal, onCloseExternal }) => {
 
   const handleToggleOpen = (state) => {
     const nextState = state !== undefined ? state : !isOpen;
+    if (!nextState) {
+      clearSessionContext();
+      wasOpenRef.current = false;
+    }
     if (onCloseExternal && !nextState) {
       onCloseExternal();
     } else {
@@ -70,6 +81,17 @@ const OmenAgent = ({ isOpenExternal, onCloseExternal }) => {
     if (!nextState) {
       playCloseSound();
     }
+  };
+
+  const clearSessionContext = () => {
+    sessionIdRef.current += 1;
+    activeRequestRef.current?.abort();
+    activeRequestRef.current = null;
+    stopOmenSpeech();
+    setSpeakingMsgId(null);
+    setInputQuery('');
+    setIsTyping(false);
+    setMessages([createWelcomeMessage()]);
   };
 
   const handleSendQuery = async (queryText) => {
@@ -90,6 +112,7 @@ const OmenAgent = ({ isOpenExternal, onCloseExternal }) => {
 
     setMessages((prev) => [...prev, userMsg]);
     setIsTyping(true);
+    const requestSessionId = sessionIdRef.current;
 
     // Prepare recent conversation history for contextual AI reasoning
     const historyPayload = messages
@@ -102,6 +125,7 @@ const OmenAgent = ({ isOpenExternal, onCloseExternal }) => {
 
     let omenResult = null;
     const controller = new AbortController();
+    activeRequestRef.current = controller;
     const timeoutId = setTimeout(() => controller.abort(), 10000);
 
     try {
@@ -134,10 +158,12 @@ const OmenAgent = ({ isOpenExternal, onCloseExternal }) => {
       console.warn('[OMEN Client] Network/API error, falling back to local engine:', apiErr?.message || apiErr);
     }
 
+    if (requestSessionId !== sessionIdRef.current) return;
+
     // Local Deterministic Engine Fallback if AI or API failed
     if (!omenResult) {
       try {
-        const fallback = await queryOmen(textToProcess);
+        const fallback = await queryOmen(textToProcess, historyPayload);
         omenResult = {
           title: fallback.title || 'OMEN // LOCAL KNOWLEDGE',
           text: fallback.text,
@@ -148,13 +174,15 @@ const OmenAgent = ({ isOpenExternal, onCloseExternal }) => {
           title: 'OMEN // SYSTEM NOTICE',
           text: "I am having trouble connecting to my neural network right now. You can explore Sourav's projects, skills, and resume using the options below.",
           actions: [
-            { label: "View Projects", actionType: "scroll", target: "projects" },
             { label: "View Resume", actionType: "link", target: "/resume.pdf", download: true },
             { label: "Contact Sourav", actionType: "scroll", target: "contact" }
           ]
         };
       }
     }
+
+    if (requestSessionId !== sessionIdRef.current) return;
+    if (activeRequestRef.current === controller) activeRequestRef.current = null;
 
     playMessageReceivedSound();
 
@@ -188,6 +216,10 @@ const OmenAgent = ({ isOpenExternal, onCloseExternal }) => {
   };
 
   const handleClearHistory = () => {
+    sessionIdRef.current += 1;
+    activeRequestRef.current?.abort();
+    activeRequestRef.current = null;
+    setIsTyping(false);
     stopOmenSpeech();
     setSpeakingMsgId(null);
     setMessages([
@@ -384,9 +416,15 @@ const OmenAgent = ({ isOpenExternal, onCloseExternal }) => {
                         </div>
 
                         {/* Interactive Action Pills */}
-                        {msg.actions && msg.actions.length > 0 && (
+                        {msg.actions?.some((act) =>
+                          act.actionType === 'query' || (act.actionType === 'link' && act.download)
+                        ) && (
                           <div className="flex flex-wrap gap-2 mt-4 pt-3 border-t border-white/10">
-                            {msg.actions.map((act, aIdx) => {
+                            {msg.actions
+                              .filter((act) =>
+                                act.actionType === 'query' || (act.actionType === 'link' && act.download)
+                              )
+                              .map((act, aIdx) => {
                               const actionClass = "flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#38bdf8]/15 hover:bg-[#38bdf8]/30 border border-[#38bdf8]/30 text-xs text-white font-medium transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer";
 
                               if (act.actionType === 'link' && act.target) {
