@@ -1,17 +1,17 @@
 /* OMEN AI Agent - Portfolio Design System Integration */
 
 .omen-launcher-glass {
-  background: rgba(11, 15, 20, 0.88);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(56, 189, 248, 0.12);
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  background: linear-gradient(135deg, rgba(17, 24, 39, 0.97), rgba(8, 13, 22, 0.96));
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
 }
 
 .omen-launcher-glass:hover {
-  border-color: rgba(56, 189, 248, 0.5);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(56, 189, 248, 0.25);
+  border-color: rgba(56, 189, 248, 0.58);
+  box-shadow: 0 15px 38px rgba(0, 0, 0, 0.5), 0 0 24px rgba(56, 189, 248, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.09);
   transform: translateY(-2px);
 }
 
@@ -29,10 +29,6 @@
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-}
-
-.omen-pulse-dot {
-  box-shadow: 0 0 8px #22c55e, 0 0 14px #22c55e;
 }
 
 .omen-chat-scroll {

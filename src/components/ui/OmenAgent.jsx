@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Bot, Sparkles, Send, X, Volume2, VolumeX, Trash2, 
+  Bot, Send, X, Volume2, VolumeX, Trash2,
   ChevronRight, ExternalLink, Volume1 
 } from 'lucide-react';
 import { queryOmen, handleOmenAction } from '../../utils/omenEngine';
@@ -278,18 +278,16 @@ const OmenAgent = ({ isOpenExternal, onCloseExternal }) => {
           whileHover={{ scale: 1.04 }}
           whileTap={{ scale: 0.96 }}
           aria-label="Ask OMEN about me"
-          className="fixed bottom-6 right-6 z-50 flex items-center gap-3.5 px-4 py-2.5 rounded-full omen-launcher-glass text-white cursor-pointer group"
+          className="fixed bottom-6 right-6 z-50 flex items-center gap-3 px-5 py-3 rounded-full omen-launcher-glass text-white cursor-pointer group"
         >
           {/* Avatar Icon Pill */}
-          <div className="relative flex items-center justify-center p-2 rounded-full bg-[#38bdf8]/15 border border-[#38bdf8]/30 text-[#38bdf8] group-hover:scale-105 transition-transform duration-300">
-            <Bot size={19} className="group-hover:rotate-12 transition-transform duration-300" />
-            <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-400 omen-pulse-dot" />
+          <div className="flex items-center justify-center w-9 h-9 rounded-full bg-[#38bdf8]/10 border border-[#38bdf8]/30 text-[#38bdf8] group-hover:bg-[#38bdf8]/20 group-hover:border-[#38bdf8]/60 transition-colors duration-300">
+            <Bot size={18} />
           </div>
 
           {/* Action Text */}
-          <div className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold tracking-wide text-slate-200 pr-1">
-            <span>Ask <span className="text-[#38bdf8] font-bold">OMEN</span> about me</span>
-            <Sparkles size={13} className="text-[#38bdf8] animate-pulse" />
+          <div className="text-sm font-medium tracking-wide text-slate-200 whitespace-nowrap">
+            Ask <span className="text-[#38bdf8] font-bold">OMEN</span> about me
           </div>
         </motion.button>
       )}
