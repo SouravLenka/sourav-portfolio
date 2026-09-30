@@ -386,17 +386,42 @@ const OmenAgent = ({ isOpenExternal, onCloseExternal }) => {
                         {/* Interactive Action Pills */}
                         {msg.actions && msg.actions.length > 0 && (
                           <div className="flex flex-wrap gap-2 mt-4 pt-3 border-t border-white/10">
-                            {msg.actions.map((act, aIdx) => (
-                              <button
-                                key={aIdx}
-                                onClick={() => handleOmenAction(act, (q) => handleSendQuery(q))}
-                                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#38bdf8]/15 hover:bg-[#38bdf8]/30 border border-[#38bdf8]/30 text-xs text-white font-medium transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer"
-                              >
-                                {act.label}
-                                {act.actionType === 'link' && <ExternalLink size={12} />}
-                                {act.actionType === 'scroll' && <ChevronRight size={12} />}
-                              </button>
-                            ))}
+                            {msg.actions.map((act, aIdx) => {
+                              const actionClass = "flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#38bdf8]/15 hover:bg-[#38bdf8]/30 border border-[#38bdf8]/30 text-xs text-white font-medium transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer";
+
+                              if (act.actionType === 'link' && act.target) {
+                                const isExternal = /^https?:\/\//i.test(act.target);
+                                const href = isExternal
+                                  ? act.target
+                                  : `${import.meta.env.BASE_URL}${act.target.replace(/^\//, '')}`;
+
+                                return (
+                                  <a
+                                    key={aIdx}
+                                    href={href}
+                                    target={isExternal ? '_blank' : undefined}
+                                    rel={isExternal ? 'noopener noreferrer' : undefined}
+                                    download={act.download ? 'Sourav_Lenka_Resume.pdf' : undefined}
+                                    className={actionClass}
+                                  >
+                                    {act.label}
+                                    <ExternalLink size={12} />
+                                  </a>
+                                );
+                              }
+
+                              return (
+                                <button
+                                  key={aIdx}
+                                  type="button"
+                                  onClick={() => handleOmenAction(act, (q) => handleSendQuery(q))}
+                                  className={actionClass}
+                                >
+                                  {act.label}
+                                  {act.actionType === 'scroll' && <ChevronRight size={12} />}
+                                </button>
+                              );
+                            })}
                           </div>
                         )}
                       </div>
@@ -426,7 +451,7 @@ const OmenAgent = ({ isOpenExternal, onCloseExternal }) => {
 
               {/* Quick Prompt Selector */}
               <div className="relative z-10 px-4 py-2 bg-[#0b0f14]/80 border-t border-white/5 flex gap-2 overflow-x-auto no-scrollbar">
-                {QUICK_PROMPTS.map((prompt) => (
+                {QUICK_PROMPTS.slice(0, 3).map((prompt) => (
                   <button
                     key={prompt.id}
                     onClick={() => handleSendQuery(prompt.query)}
