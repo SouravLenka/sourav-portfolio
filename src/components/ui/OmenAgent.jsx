@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Bot, Sparkles, Send, X, Volume2, VolumeX, Trash2, 
-  ChevronRight, Terminal, ExternalLink, Volume1 
+  ChevronRight, ExternalLink, Volume1 
 } from 'lucide-react';
 import { queryOmen, handleOmenAction } from '../../utils/omenEngine';
 import { 
@@ -285,16 +285,13 @@ const OmenAgent = ({ isOpenExternal, onCloseExternal }) => {
                   <div>
                     <div className="flex items-center gap-2">
                       <h3 className="font-mono font-bold text-sm sm:text-base tracking-wider text-white">
-                        OMEN <span className="text-[#38bdf8]">// PORTFOLIO AI</span>
+                        OMEN
                       </h3>
                       <span className="flex h-2 w-2 relative">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                         <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                       </span>
                     </div>
-                    <p className="text-[11px] text-slate-400 font-mono">
-                      Autonomous Intelligence Unit & Interactive Guide
-                    </p>
                   </div>
                 </div>
 
@@ -340,15 +337,6 @@ const OmenAgent = ({ isOpenExternal, onCloseExternal }) => {
                     <X size={18} />
                   </button>
                 </div>
-              </div>
-
-              {/* System HUD Status Ribbon */}
-              <div className="relative z-10 px-6 py-1.5 bg-[#0b0f14]/80 border-b border-white/5 flex items-center justify-between text-[10px] font-mono text-slate-400">
-                <span className="flex items-center gap-1">
-                  <Terminal size={10} className="text-[#38bdf8]" /> STATUS: ACTIVE
-                </span>
-                <span className="hidden sm:inline">KNOWLEDGE: SOURAV LENKA (v2.5)</span>
-                <span>VOICE ENGINE: ACTIVE</span>
               </div>
 
               {/* Chat Conversation Thread */}

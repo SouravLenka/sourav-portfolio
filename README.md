@@ -22,7 +22,7 @@ Configure these variables in your deployment platform dashboard (Netlify/Vercel)
 | Variable         | Description                                            | Default                |
 | :--------------- | :----------------------------------------------------- | :--------------------- |
 | `GEMINI_API_KEY` | Google AI Studio Gemini API key (**Server-side only**) | _Required for AI mode_ |
-| `GEMINI_MODEL`   | Supported Gemini Flash model ID                        | `gemini-1.5-flash`     |
+| `GEMINI_MODEL` | Supported Gemini Flash model ID | `gemini-3.1-flash-lite` |
 | `RESEND_API_KEY` | Resend API key for contact form submissions            | _Optional_             |
 
 ### Local Development Setup

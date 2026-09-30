@@ -3,7 +3,7 @@ import { retrievePortfolioContext } from '../src/utils/portfolioRetriever.js';
 import { generateGeminiResponse } from './providers/gemini.js';
 import { queryOmen } from '../src/utils/omenEngine.js';
 
-// Simple in-memory rate limiter for serverless instance (20 requests per minute per IP)
+// Simple in-memory rate limiter (20 requests per minute per IP)
 const rateLimitMap = new Map();
 const RATE_LIMIT_WINDOW_MS = 60 * 1000;
 const MAX_REQUESTS_PER_WINDOW = 20;
@@ -18,10 +18,7 @@ function isRateLimited(ip) {
   }
 
   record.count += 1;
-  if (record.count > MAX_REQUESTS_PER_WINDOW) {
-    return true;
-  }
-  return false;
+  return record.count > MAX_REQUESTS_PER_WINDOW;
 }
 
 // Cleanup stale rate limit entries periodically
@@ -35,21 +32,26 @@ setInterval(() => {
 }, 5 * 60 * 1000).unref?.();
 
 /**
- * Universal Serverless Handler for OMEN Chat API (/api/chat)
- * Supports:
- * - Vercel / Express (req, res)
- * - Netlify Functions v2 (Request, context)
- * - Netlify Functions v1 (event, context)
+ * OMEN Chat API Handler (/api/chat)
+ *
+ * Flow:
+ *   1. Validate request method and body
+ *   2. Apply IP rate limiting
+ *   3. Retrieve targeted portfolio context
+ *   4. If GEMINI_API_KEY is set → call Gemini for dynamic AI response
+ *   5. If Gemini fails or key is missing → fall back to local omenEngine.js
+ *
+ * Supports: Vercel, Netlify Functions v1/v2, and Vite dev middleware.
  */
 export default async function handler(req, res) {
   const method = req?.method || req?.httpMethod;
 
-  // 1. Method verification
+  // 1. Method guard
   if (method !== 'POST') {
     return sendResponse(res, 405, { error: 'Method not allowed. Only POST is supported.' });
   }
 
-  // 2. Rate limit verification
+  // 2. Rate limiting
   const clientIp = getClientIp(req);
   if (isRateLimited(clientIp)) {
     return sendResponse(res, 429, {
@@ -57,10 +59,16 @@ export default async function handler(req, res) {
     });
   }
 
-  // 3. Body parsing and validation
-  const body = await parseRequestBody(req);
-  const rawMessage = body.message || body.query;
-  const history = Array.isArray(body.history) ? body.history.slice(-8) : [];
+  // 3. Parse and validate request body
+  let body;
+  try {
+    body = await parseRequestBody(req);
+  } catch (_) {
+    body = {};
+  }
+
+  const rawMessage = body?.message || body?.query;
+  const history = Array.isArray(body?.history) ? body.history.slice(-8) : [];
 
   if (!rawMessage || typeof rawMessage !== 'string' || !rawMessage.trim()) {
     return sendResponse(res, 400, { error: 'Query message cannot be empty.' });
@@ -68,42 +76,44 @@ export default async function handler(req, res) {
 
   const message = rawMessage.trim().slice(0, 600);
 
-  // 4. Retrieve portfolio context
-  const retrieval = retrievePortfolioContext(message, history);
-
-  // 5. Try Gemini AI Provider with automatic fallback
+  // 4. Retrieve targeted portfolio context (always executed, even for fallback)
+  let retrieval;
   try {
-    if (!process.env.GEMINI_API_KEY) {
-      // If API key is not configured, fall back to local OMEN engine immediately
-      const localResult = await queryOmen(message);
+    retrieval = retrievePortfolioContext(message, history);
+  } catch (retrievalErr) {
+    console.warn('[OMEN] Retrieval error (non-fatal):', retrievalErr?.message || retrievalErr);
+    retrieval = { contextText: '', relevantProjects: [], relevantSkills: [], suggestedActions: [] };
+  }
+
+  // 5. Primary path: Gemini AI
+  const apiKey = (process.env.GEMINI_API_KEY || '').trim();
+
+  if (apiKey) {
+    try {
+      const aiResult = await generateGeminiResponse({
+        query: message,
+        history,
+        contextText: retrieval.contextText,
+        suggestedActions: retrieval.suggestedActions
+      });
+
       return sendResponse(res, 200, {
         success: true,
-        title: localResult.title,
-        text: localResult.text,
-        actions: localResult.actions || [],
-        source: 'local_fallback'
+        title: aiResult.title,
+        text: aiResult.text,
+        actions: aiResult.actions,
+        source: 'gemini'
       });
+    } catch (geminiErr) {
+      // Log safe error details (never log the API key)
+      console.warn('[OMEN] Gemini fallback triggered:', geminiErr?.message || geminiErr);
     }
+  } else {
+    console.log('[OMEN] GEMINI_API_KEY not configured — using local fallback');
+  }
 
-    const aiResult = await generateGeminiResponse({
-      query: message,
-      history,
-      contextText: retrieval.contextText,
-      suggestedActions: retrieval.suggestedActions
-    });
-
-    return sendResponse(res, 200, {
-      success: true,
-      title: aiResult.title,
-      text: aiResult.text,
-      actions: aiResult.actions,
-      source: 'gemini'
-    });
-  } catch (err) {
-    // Log safely without exposing keys or credentials
-    console.warn('[OMEN] Gemini generation fallback triggered:', err.message || err);
-
-    // Fall back smoothly to local deterministic OMEN engine
+  // 6. Fallback path: local deterministic OMEN engine
+  try {
     const localResult = await queryOmen(message);
     return sendResponse(res, 200, {
       success: true,
@@ -111,6 +121,19 @@ export default async function handler(req, res) {
       text: localResult.text,
       actions: localResult.actions || [],
       source: 'local_fallback'
+    });
+  } catch (localErr) {
+    console.error('[OMEN] Local engine also failed:', localErr?.message || localErr);
+    return sendResponse(res, 200, {
+      success: true,
+      title: 'OMEN // SYSTEM NOTICE',
+      text: "I'm having trouble reaching my AI backend right now. You can still explore Sourav's projects, skills, and resume below.",
+      actions: [
+        { label: 'View Projects', actionType: 'scroll', target: 'projects' },
+        { label: '📄 Resume', actionType: 'link', target: '/resume.pdf', download: true },
+        { label: 'Contact Sourav', actionType: 'scroll', target: 'contact' }
+      ],
+      source: 'error_fallback'
     });
   }
 }
