@@ -70,6 +70,41 @@ export const projects = [
     iconName: "Mind"
   },
   {
+    title: "CREDASYS – Intelligent Corporate Credit Decision Engine",
+    shortDescription:
+      "AI-powered corporate credit analysis platform for document-driven research, risk assessment, and CAM report generation.",
+    longDescription:
+      "CREDASYS is an end-to-end intelligent corporate credit decision platform that processes company documents, performs automated corporate research, extracts financial and business signals, evaluates credit risk across the Five Cs of Credit, and generates Credit Appraisal Memorandum (CAM) reports. The system combines a React/Next.js frontend with a FastAPI backend, PostgreSQL persistence, Groq-powered LLM workflows, document ingestion, risk analytics, and automated PDF/DOCX reporting. It is deployed as a full-stack application on Railway.",
+    features: [
+      "Multi-format corporate document upload and ingestion",
+      "Automated company research and risk-flag extraction",
+      "LLM-assisted corporate and financial data extraction",
+      "Five Cs of Credit risk analytics",
+      "Credit score, risk category, and lending decision generation",
+      "Automated CAM report generation in PDF and DOCX",
+      "PostgreSQL-backed analysis and document persistence",
+      "Production deployment with separate frontend and backend services",
+    ],
+    tech: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "FastAPI",
+      "Python",
+      "PostgreSQL",
+      "SQLAlchemy",
+      "Groq LLM",
+      "Document Processing",
+      "Risk Analytics",
+      "Railway",
+    ],
+    image:
+      "https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=2070&auto=format&fit=crop",
+    github: "https://github.com/SouravLenka/CREDASYS.git",
+    live: "https://credasys-frontend-production.up.railway.app",
+    iconName: "BarChart3",
+  },
+  {
     title: "AI Resume Parser",
     shortDescription:
       "OCR-powered AI system for extracting structured, ATS-ready data from scanned resumes.",
